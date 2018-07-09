@@ -4,9 +4,15 @@ data Bal = Bal {bounds :: IntPair, coor :: IntPair, speed :: Float, direction ::
 type IntPair = (Int, Int)
 
 drawBal :: Bal -> IO()
+drawBal = undefined
 
 
 speedup :: Bal -> Float -> Bal
+speedup bal dv = bal {speed = newspeed}
+  where
+    newspeed = speed bal+dv 
+    
+	
 
 move :: Bal -> Bal
 move bal = bal {coor = newcoor}
