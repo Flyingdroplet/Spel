@@ -4,6 +4,18 @@ import Graphics.UI.GLUT
 import Color
 import Control.Monad
 
+
+circle :: Int -> (GLfloat, GLfloat, GLfloat) -> (GLfloat, GLfloat) -> (GLfloat, GLfloat) -> IO ()
+circle sides c@(r,g,b) (x1, y1) (x2, y2) = do
+  renderPrimitive Polygon $ do
+    color3f r g b
+    mapM_ (\(x, y, z) -> vertex $ Vertex3 x y z) myPoints
+      where
+        myPoints :: [(GLfloat,GLfloat,GLfloat)]
+        myPoints = [ (((((sin (2*pi*k/(fromIntegral sides)))/2)+1)*width)-width/2+x1, (((((cos (2*pi*k/(fromIntegral sides))))/2)+1)*height)-height/2+y1, 0) | k <- [1..12] ]
+        width  = abs (x2-x1)
+        height = abs(y2-y1)
+
 vertex2f :: (GLfloat, GLfloat) -> IO ()
 vertex2f (x, y) = vertex $ Vertex2 x y
 
@@ -38,31 +50,7 @@ triangle c@(r, g, b) p1@(x1, y1) p2@(x2, y2) p3@(x3, y3) =
     vertex2f (x2, y2)
     vertex2f (x3, y3)
 
-raster :: (GLfloat, GLfloat, GLfloat) -> Bounds -> IO ()
-raster c@(r, g, b) bounds =
-  renderPrimitive Lines $ do
-    let
-      x' = maxWidth  bounds
-      y' = maxHeight bounds
-      x = fromIntegral x'
-      y = fromIntegral y'
-      xs = [1..(x'-1)]
-      ys = [1..(y'-1)]
-
-    color3f r g b
-    forM_ (xs) $ (\k -> do drawVerLine x k)
-    forM_ (ys) $ (\k -> do drawHorLine y k)
-
-drawVerLine :: GLfloat -> Int -> IO ()
-drawVerLine x w' = do
-  let
-    w = fromIntegral w'
-  vertex2f ((1/x)*w, 0)
-  vertex2f ((1/x)*w, (-1))
-
-drawHorLine :: GLfloat -> Int -> IO ()
-drawHorLine y w' = do
-  let
-    w = fromIntegral w'
-  vertex2f (0, (-1/y)*w)
-  vertex2f (1, (-1/y)*w)
+net :: IO ()
+net = renderPrimitive Lines $ do
+  vertex2f (100, 0)
+  vertex2f (100, 100)

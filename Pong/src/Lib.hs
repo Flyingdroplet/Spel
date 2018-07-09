@@ -2,5 +2,10 @@ module Lib
     ( someFunc
     ) where
 
+
+import SpelMain
+
 someFunc :: IO ()
-someFunc = putStrLn "someFunc"
+someFunc = do
+  putStrLn "starting application"
+  spelMain
