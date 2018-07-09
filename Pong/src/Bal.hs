@@ -1,6 +1,6 @@
 module Bal where
 
-data Bal = Bal {bounds :: IntPair, coor :: IntPair, speed :: Float, direction :: Float}
+data Bal = Bal {bounds :: IntPair, coor :: IntPair, speed :: Float, direction :: Float} deriving Show
 type IntPair = (Float, Float)
 
 drawBal :: Bal -> IO()
