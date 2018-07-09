@@ -17,6 +17,6 @@ speedup bal dv = bal {speed = newspeed}
 move :: Bal -> Bal
 move bal = bal {coor = newcoor}
   where
-    newcoor = (x + (cos direction)*speed, y + (sin direction)speed)
-    (_, (x, y), speed, direction) = bal
+    newcoor = (x + (cos direction')*speed, y + (sin direction')speed)
+    (_, (x, y), speed, direction') = bal
 
